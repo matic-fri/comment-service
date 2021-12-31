@@ -1,0 +1,1 @@
+INSERT INTO comment ( user_id, file_id, stars, text ) VALUES ( 1, 1, 4, 'Zelo vredu fajli majkemi.');
