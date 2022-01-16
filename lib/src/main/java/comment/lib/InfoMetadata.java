@@ -5,7 +5,7 @@ import java.time.Instant;
 public class InfoMetadata {
 
 
-    private String[] clani = {"Matic Isovski", "Jakob Gart"};
+    private String[] clani = {"Matic Isovski", "Jakob Gaberc Artenjak"};
     private String opis_projekta = "";
     private String[] mikrostoritve = {""};
     private String[] github = {""};

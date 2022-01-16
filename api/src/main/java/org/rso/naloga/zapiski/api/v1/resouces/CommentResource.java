@@ -2,6 +2,7 @@ package org.rso.naloga.zapiski.api.v1.resouces;
 
 import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import comment.lib.Comment;
+import comment.lib.UpdateComment;
 import comment.services.beans.CommentBean;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -69,6 +70,11 @@ public class CommentResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
+        if(comment.getId()==-1){
+            return Response.status(500, "Fallback. Comment doesn't exist or circuit open").build();
+        }
+
+
         return Response.status(Response.Status.OK).entity(comment).build();
     }
 
@@ -92,6 +98,56 @@ public class CommentResource {
         comment = commentBean.createComment(comment);
 
         return Response.status(Response.Status.OK).entity(comment).build();
+    }
+
+    @Operation(description = "Update a comments stars and text.", summary = "Update comment.")
+    @APIResponses({
+            @APIResponse(responseCode = "200",
+                    description = "Updated a comments stars and text.",
+                    content = @Content(schema = @Schema(implementation = UpdateComment.class, type = SchemaType.OBJECT)),
+                    headers = {@Header(name = "X-Total-Count", description = "Comment")}
+            )})
+    @PUT
+    @Path("{commentId}")
+    public Response updateComment(@PathParam("commentId") long commentId, UpdateComment newComment){
+
+        Comment comment = commentBean.getComment(commentId);
+
+        if(comment==null){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        comment.setStarCount(newComment.getNewStars());
+
+        comment.setText(newComment.getNewText());
+
+        comment = commentBean.updateComment(commentId, comment);
+
+        return Response.status(Response.Status.OK).entity(comment).build();
+
+
+    }
+
+    @Operation(description = "Delete a comment with given id.", summary = "Delete a comment.")
+    @APIResponses({
+            @APIResponse(responseCode = "200",
+                    description = "Delete a comment with given id.",
+                    content = @Content(schema = @Schema(implementation = Comment.class, type = SchemaType.OBJECT)),
+                    headers = {@Header(name = "X-Total-Count", description = "Comment")}
+            )})
+    @DELETE
+    @Path("{commentId}")
+    public Response deleteComment(@PathParam("commentId") long commentId){
+
+        boolean deleted = commentBean.deleteComment(commentId);
+
+        if (deleted) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+        else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
     }
 
 }

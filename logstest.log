@@ -143,3 +143,113 @@ org.postgresql.util.PSQLException: FATAL: no pg_hba.conf entry for host "89.212.
 2022-01-13 21:43:59,171 [main] INFO  org.jboss.weld.Event - WELD-000411: Observer method [BackedAnnotatedMethod] public org.glassfish.jersey.ext.cdi1x.internal.ProcessAllAnnotatedTypes.processAnnotatedType(@Observes ProcessAnnotatedType<?>, BeanManager) receives events for all annotated types. Consider restricting events using @WithAnnotations or a generic type with bounds.
 2022-01-13 21:43:59,219 [weld-worker-7] INFO  org.jboss.weld.Bootstrap - WELD-000119: Not generating any bean definitions from com.kumuluz.ee.health.checks.MongoHealthCheck because of underlying class loading error: Type Failure to load: com.mongodb.MongoClient not found.  If this is unexpected, enable DEBUG logging to see the full error.
 2022-01-13 21:43:59,280 [main] INFO  org.jboss.weld.environment.servletJetty - WELD-ENV-001200: Jetty 7.2+ detected, CDI injection will be available in Servlets and Filters. Injection into Listeners should work on Jetty 9.1.1 and newer.
+2022-01-16 13:18:20,986 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-01-16 13:18:22,148 [main] ERROR com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Exception during pool initialization.
+org.postgresql.util.PSQLException: The connection attempt failed.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:297) ~[lib_postgresql-42.2.13.jar:42.2.13]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:49) ~[lib_postgresql-42.2.13.jar:42.2.13]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:217) ~[lib_postgresql-42.2.13.jar:42.2.13]
+	at org.postgresql.Driver.makeConnection(Driver.java:458) ~[lib_postgresql-42.2.13.jar:42.2.13]
+	at org.postgresql.Driver.connect(Driver.java:260) ~[lib_postgresql-42.2.13.jar:42.2.13]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:121) ~[lib_HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:358) ~[lib_HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206) ~[lib_HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:477) ~[lib_HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:560) ~[lib_HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[lib_HikariCP-3.4.5.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81) ~[lib_HikariCP-3.4.5.jar:?]
+	at io.agroal.hikari.HikariUnderTheCovers.<init>(HikariUnderTheCovers.java:48) ~[lib_agroal-hikari-1.9.jar:1.9]
+	at io.agroal.hikari.HikariProvider.getDataSource(HikariProvider.java:20) ~[lib_agroal-hikari-1.9.jar:1.9]
+	at io.agroal.api.AgroalDataSource.from(AgroalDataSource.java:41) ~[lib_agroal-api-1.9.jar:1.9]
+	at io.agroal.api.AgroalDataSource.from(AgroalDataSource.java:33) ~[lib_agroal-api-1.9.jar:1.9]
+	at com.kumuluz.ee.factories.AgroalDataSourceFactory.createDataSource(AgroalDataSourceFactory.java:67) ~[lib_kumuluzee-core-3.12.2.jar:?]
+	at com.kumuluz.ee.EeApplication.lambda$initialize$6(EeApplication.java:270) ~[lib_kumuluzee-core-3.12.2.jar:?]
+	at java.util.ArrayList.forEach(ArrayList.java:1540) ~[?:?]
+	at java.util.Collections$UnmodifiableCollection.forEach(Collections.java:1083) ~[?:?]
+	at com.kumuluz.ee.EeApplication.initialize(EeApplication.java:269) ~[lib_kumuluzee-core-3.12.2.jar:?]
+	at com.kumuluz.ee.EeApplication.<init>(EeApplication.java:66) ~[lib_kumuluzee-core-3.12.2.jar:?]
+	at com.kumuluz.ee.EeApplication.main(EeApplication.java:78) ~[lib_kumuluzee-core-3.12.2.jar:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at com.kumuluz.ee.loader.EeClassLoader.invokeMain(EeClassLoader.java:437) ~[comment-api-1.0-SNAPSHOT.jar:?]
+	at com.kumuluz.ee.loader.EeBootLoader.launch(EeBootLoader.java:54) ~[comment-api-1.0-SNAPSHOT.jar:?]
+	at com.kumuluz.ee.loader.EeBootLoader.main(EeBootLoader.java:41) ~[comment-api-1.0-SNAPSHOT.jar:?]
+Caused by: java.net.UnknownHostException: rso-db.postgres.database.azure.com
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:220) ~[?:?]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:403) ~[?:?]
+	at java.net.Socket.connect(Socket.java:591) ~[?:?]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:81) ~[lib_postgresql-42.2.13.jar:42.2.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:93) ~[lib_postgresql-42.2.13.jar:42.2.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:197) ~[lib_postgresql-42.2.13.jar:42.2.13]
+	... 29 more
+2022-01-16 13:22:56,184 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-01-16 13:23:06,905 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-01-16 13:23:08,366 [main] INFO  org.jboss.weld.environment.servletWeldServlet - WELD-ENV-001008: Initialize Weld using ServletContainerInitializer
+2022-01-16 13:23:08,384 [main] INFO  org.jboss.weld.Version - WELD-000900: 3.1.1 (Final)
+2022-01-16 13:23:08,661 [main] INFO  org.jboss.weld.Bootstrap - WELD-ENV-000020: Using jandex for bean discovery
+2022-01-16 13:23:09,024 [main] INFO  org.jboss.weld.Bootstrap - WELD-000101: Transactional services not available. Injection of @Inject UserTransaction not available. Transactional observers will be invoked synchronously.
+2022-01-16 13:23:09,208 [main] INFO  org.jboss.weld.Event - WELD-000411: Observer method [BackedAnnotatedMethod] public org.glassfish.jersey.ext.cdi1x.internal.ProcessAllAnnotatedTypes.processAnnotatedType(@Observes ProcessAnnotatedType<?>, BeanManager) receives events for all annotated types. Consider restricting events using @WithAnnotations or a generic type with bounds.
+2022-01-16 13:23:09,289 [weld-worker-5] INFO  org.jboss.weld.Bootstrap - WELD-000119: Not generating any bean definitions from com.kumuluz.ee.health.checks.MongoHealthCheck because of underlying class loading error: Type Failure to load: com.mongodb.MongoClient not found.  If this is unexpected, enable DEBUG logging to see the full error.
+2022-01-16 13:23:09,371 [main] INFO  org.jboss.weld.environment.servletJetty - WELD-ENV-001200: Jetty 7.2+ detected, CDI injection will be available in Servlets and Filters. Injection into Listeners should work on Jetty 9.1.1 and newer.
+2022-01-16 14:02:23,607 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-01-16 14:02:33,936 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-01-16 14:02:35,629 [main] INFO  org.jboss.weld.environment.servletWeldServlet - WELD-ENV-001008: Initialize Weld using ServletContainerInitializer
+2022-01-16 14:02:35,648 [main] INFO  org.jboss.weld.Version - WELD-000900: 3.1.1 (Final)
+2022-01-16 14:02:35,871 [main] INFO  org.jboss.weld.Bootstrap - WELD-ENV-000020: Using jandex for bean discovery
+2022-01-16 14:02:36,193 [main] INFO  org.jboss.weld.Bootstrap - WELD-000101: Transactional services not available. Injection of @Inject UserTransaction not available. Transactional observers will be invoked synchronously.
+2022-01-16 14:02:36,326 [main] INFO  org.jboss.weld.Event - WELD-000411: Observer method [BackedAnnotatedMethod] public org.glassfish.jersey.ext.cdi1x.internal.ProcessAllAnnotatedTypes.processAnnotatedType(@Observes ProcessAnnotatedType<?>, BeanManager) receives events for all annotated types. Consider restricting events using @WithAnnotations or a generic type with bounds.
+2022-01-16 14:02:36,369 [main] INFO  io.smallrye.faulttolerance.FaultToleranceExtension - MicroProfile: Fault Tolerance activated (SmallRye Fault Tolerance version: 4.3.1)
+2022-01-16 14:02:36,443 [weld-worker-8] INFO  org.jboss.weld.Bootstrap - WELD-000119: Not generating any bean definitions from com.kumuluz.ee.health.checks.MongoHealthCheck because of underlying class loading error: Type Failure to load: com.mongodb.MongoClient not found.  If this is unexpected, enable DEBUG logging to see the full error.
+2022-01-16 14:02:36,513 [main] INFO  org.jboss.weld.environment.servletJetty - WELD-ENV-001200: Jetty 7.2+ detected, CDI injection will be available in Servlets and Filters. Injection into Listeners should work on Jetty 9.1.1 and newer.
+2022-01-16 14:10:04,084 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-01-16 14:10:14,401 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-01-16 14:10:15,856 [main] INFO  org.jboss.weld.environment.servletWeldServlet - WELD-ENV-001008: Initialize Weld using ServletContainerInitializer
+2022-01-16 14:10:15,881 [main] INFO  org.jboss.weld.Version - WELD-000900: 3.1.1 (Final)
+2022-01-16 14:10:16,092 [main] INFO  org.jboss.weld.Bootstrap - WELD-ENV-000020: Using jandex for bean discovery
+2022-01-16 14:10:16,416 [main] INFO  org.jboss.weld.Bootstrap - WELD-000101: Transactional services not available. Injection of @Inject UserTransaction not available. Transactional observers will be invoked synchronously.
+2022-01-16 14:10:16,540 [main] INFO  org.jboss.weld.Event - WELD-000411: Observer method [BackedAnnotatedMethod] public org.glassfish.jersey.ext.cdi1x.internal.ProcessAllAnnotatedTypes.processAnnotatedType(@Observes ProcessAnnotatedType<?>, BeanManager) receives events for all annotated types. Consider restricting events using @WithAnnotations or a generic type with bounds.
+2022-01-16 14:10:16,582 [main] INFO  io.smallrye.faulttolerance.FaultToleranceExtension - MicroProfile: Fault Tolerance activated (SmallRye Fault Tolerance version: 4.3.1)
+2022-01-16 14:10:16,667 [weld-worker-8] INFO  org.jboss.weld.Bootstrap - WELD-000119: Not generating any bean definitions from com.kumuluz.ee.health.checks.MongoHealthCheck because of underlying class loading error: Type Failure to load: com.mongodb.MongoClient not found.  If this is unexpected, enable DEBUG logging to see the full error.
+2022-01-16 14:10:16,730 [main] INFO  org.jboss.weld.environment.servletJetty - WELD-ENV-001200: Jetty 7.2+ detected, CDI injection will be available in Servlets and Filters. Injection into Listeners should work on Jetty 9.1.1 and newer.
+2022-01-16 14:19:36,171 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-01-16 14:19:45,343 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-01-16 14:19:46,947 [main] INFO  org.jboss.weld.environment.servletWeldServlet - WELD-ENV-001008: Initialize Weld using ServletContainerInitializer
+2022-01-16 14:19:46,981 [main] INFO  org.jboss.weld.Version - WELD-000900: 3.1.1 (Final)
+2022-01-16 14:19:47,314 [main] INFO  org.jboss.weld.Bootstrap - WELD-ENV-000020: Using jandex for bean discovery
+2022-01-16 14:19:48,110 [main] INFO  org.jboss.weld.Bootstrap - WELD-000101: Transactional services not available. Injection of @Inject UserTransaction not available. Transactional observers will be invoked synchronously.
+2022-01-16 14:19:48,285 [main] INFO  org.jboss.weld.Event - WELD-000411: Observer method [BackedAnnotatedMethod] public org.glassfish.jersey.ext.cdi1x.internal.ProcessAllAnnotatedTypes.processAnnotatedType(@Observes ProcessAnnotatedType<?>, BeanManager) receives events for all annotated types. Consider restricting events using @WithAnnotations or a generic type with bounds.
+2022-01-16 14:19:48,337 [main] INFO  io.smallrye.faulttolerance.FaultToleranceExtension - MicroProfile: Fault Tolerance activated (SmallRye Fault Tolerance version: 4.3.1)
+2022-01-16 14:19:48,392 [weld-worker-2] INFO  org.jboss.weld.Bootstrap - WELD-000119: Not generating any bean definitions from com.kumuluz.ee.health.checks.MongoHealthCheck because of underlying class loading error: Type Failure to load: com.mongodb.MongoClient not found.  If this is unexpected, enable DEBUG logging to see the full error.
+2022-01-16 14:19:48,478 [main] INFO  org.jboss.weld.environment.servletJetty - WELD-ENV-001200: Jetty 7.2+ detected, CDI injection will be available in Servlets and Filters. Injection into Listeners should work on Jetty 9.1.1 and newer.
+2022-01-16 14:28:42,251 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-01-16 14:28:52,335 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-01-16 14:28:54,663 [main] INFO  org.jboss.weld.environment.servletWeldServlet - WELD-ENV-001008: Initialize Weld using ServletContainerInitializer
+2022-01-16 14:28:54,696 [main] INFO  org.jboss.weld.Version - WELD-000900: 3.1.1 (Final)
+2022-01-16 14:28:55,193 [main] INFO  org.jboss.weld.Bootstrap - WELD-ENV-000020: Using jandex for bean discovery
+2022-01-16 14:28:55,695 [main] INFO  org.jboss.weld.Bootstrap - WELD-000101: Transactional services not available. Injection of @Inject UserTransaction not available. Transactional observers will be invoked synchronously.
+2022-01-16 14:28:56,101 [main] INFO  org.jboss.weld.Event - WELD-000411: Observer method [BackedAnnotatedMethod] public org.glassfish.jersey.ext.cdi1x.internal.ProcessAllAnnotatedTypes.processAnnotatedType(@Observes ProcessAnnotatedType<?>, BeanManager) receives events for all annotated types. Consider restricting events using @WithAnnotations or a generic type with bounds.
+2022-01-16 14:28:56,181 [main] INFO  io.smallrye.faulttolerance.FaultToleranceExtension - MicroProfile: Fault Tolerance activated (SmallRye Fault Tolerance version: 4.3.1)
+2022-01-16 14:28:56,279 [weld-worker-8] INFO  org.jboss.weld.Bootstrap - WELD-000119: Not generating any bean definitions from com.kumuluz.ee.health.checks.MongoHealthCheck because of underlying class loading error: Type Failure to load: com.mongodb.MongoClient not found.  If this is unexpected, enable DEBUG logging to see the full error.
+2022-01-16 14:28:56,415 [main] INFO  org.jboss.weld.environment.servletJetty - WELD-ENV-001200: Jetty 7.2+ detected, CDI injection will be available in Servlets and Filters. Injection into Listeners should work on Jetty 9.1.1 and newer.
+2022-01-16 14:30:13,266 [qtp788048067-64] WARN  graphql.GraphQL - Query failed to validate : 'mutation MyQuery {
+  addComment(comment: {fileId: "3", starCount: 4, text: "Haha", userId: "1"}) {
+    id
+  }
+}
+
+query print {
+  allComments
+}
+'
+2022-01-16 14:49:56,890 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-01-16 14:50:04,254 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-01-16 14:50:06,245 [main] INFO  org.jboss.weld.environment.servletWeldServlet - WELD-ENV-001008: Initialize Weld using ServletContainerInitializer
+2022-01-16 14:50:06,281 [main] INFO  org.jboss.weld.Version - WELD-000900: 3.1.1 (Final)
+2022-01-16 14:50:06,557 [main] INFO  org.jboss.weld.Bootstrap - WELD-ENV-000020: Using jandex for bean discovery
+2022-01-16 14:50:06,904 [main] INFO  org.jboss.weld.Bootstrap - WELD-000101: Transactional services not available. Injection of @Inject UserTransaction not available. Transactional observers will be invoked synchronously.
+2022-01-16 14:50:07,077 [main] INFO  org.jboss.weld.Event - WELD-000411: Observer method [BackedAnnotatedMethod] public org.glassfish.jersey.ext.cdi1x.internal.ProcessAllAnnotatedTypes.processAnnotatedType(@Observes ProcessAnnotatedType<?>, BeanManager) receives events for all annotated types. Consider restricting events using @WithAnnotations or a generic type with bounds.
+2022-01-16 14:50:07,107 [main] INFO  io.smallrye.faulttolerance.FaultToleranceExtension - MicroProfile: Fault Tolerance activated (SmallRye Fault Tolerance version: 4.3.1)
+2022-01-16 14:50:07,197 [weld-worker-7] INFO  org.jboss.weld.Bootstrap - WELD-000119: Not generating any bean definitions from com.kumuluz.ee.health.checks.MongoHealthCheck because of underlying class loading error: Type Failure to load: com.mongodb.MongoClient not found.  If this is unexpected, enable DEBUG logging to see the full error.
+2022-01-16 14:50:07,292 [main] INFO  org.jboss.weld.environment.servletJetty - WELD-ENV-001200: Jetty 7.2+ detected, CDI injection will be available in Servlets and Filters. Injection into Listeners should work on Jetty 9.1.1 and newer.
