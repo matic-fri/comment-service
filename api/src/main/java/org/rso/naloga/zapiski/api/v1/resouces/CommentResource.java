@@ -4,6 +4,8 @@ import com.kumuluz.ee.cors.annotations.CrossOrigin;
 import comment.lib.Comment;
 import comment.lib.UpdateComment;
 import comment.services.beans.CommentBean;
+import comment.services.clients.WordFilter;
+import org.eclipse.microprofile.metrics.annotation.*;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -34,8 +36,12 @@ public class CommentResource {
     @Inject
     private CommentBean commentBean;
 
+    @Inject
+    private WordFilter wordFilter;
+
     @Context
     protected UriInfo uriInfo;
+
 
 
     @Operation(description = "Get all comments.", summary = "Get comments.")
@@ -45,9 +51,11 @@ public class CommentResource {
                     content = @Content(schema = @Schema(implementation = Comment.class, type = SchemaType.ARRAY)),
                     headers = {@Header(name = "X-Total-Count", description = "Comments")}
             )})
+    @SimplyTimed
     @GET
     public Response getComments(){
         List<Comment> comments = commentBean.getAllComments();
+
 
         return Response.status(Response.Status.OK).entity(comments).build();
     }
@@ -61,6 +69,7 @@ public class CommentResource {
                     headers = {@Header(name = "X-Total-Count", description = "Comment")}
             )})
     @GET
+    @Counted
     @Path("{commentId}")
     public Response getCommentById(@PathParam("commentId") Long commentId){
 
@@ -87,6 +96,7 @@ public class CommentResource {
                     headers = {@Header(name = "X-Total-Count", description = "Comment")}
             )})
     @POST
+    @Counted
     public Response createComment(Comment comment){
 
         if (comment.getUserId() == null || comment.getText() == null ||
@@ -94,6 +104,11 @@ public class CommentResource {
 
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+
+        if(wordFilter.hasBadWords(comment.getText())){
+            return Response.status(406, "Comment has bad words").build();
+        }
+
 
         comment = commentBean.createComment(comment);
 
@@ -108,6 +123,7 @@ public class CommentResource {
                     headers = {@Header(name = "X-Total-Count", description = "Comment")}
             )})
     @PUT
+    @Counted
     @Path("{commentId}")
     public Response updateComment(@PathParam("commentId") long commentId, UpdateComment newComment){
 
@@ -115,6 +131,10 @@ public class CommentResource {
 
         if(comment==null){
             return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        if(wordFilter.hasBadWords(newComment.getNewText())){
+            return Response.status(406, "New comment has bad words").build();
         }
 
         comment.setStarCount(newComment.getNewStars());
@@ -136,6 +156,7 @@ public class CommentResource {
                     headers = {@Header(name = "X-Total-Count", description = "Comment")}
             )})
     @DELETE
+    @Counted
     @Path("{commentId}")
     public Response deleteComment(@PathParam("commentId") long commentId){
 
