@@ -57,11 +57,11 @@
                 <version>${kumuluzee-rest.version}</version>
             </dependency>
 
-            <!--NOT YET IMPLEMENTED<dependency>
+            <dependency>
                 <artifactId>kumuluzee-config-consul</artifactId>
                 <groupId>com.kumuluz.ee.config</groupId>
                 <version>${kumuluzee-config.version}</version>
-            </dependency>-->
+            </dependency>
 
             <dependency>
                 <groupId>com.kumuluz.ee.health</groupId>
@@ -173,6 +173,7 @@
                 <artifactId>json</artifactId>
                 <version>20180130</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 
