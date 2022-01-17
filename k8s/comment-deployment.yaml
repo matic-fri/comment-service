@@ -14,21 +14,19 @@ spec:
     spec:
       containers:
         - image: matic4fri/rso-comment-service:latest
-          name: comment
+          name: file
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-              value: jdbc:postgresql://rsobaza.postgres.database.azure.com:5432/postgres
+              value: jdbc:postgresql://rso-literatura.postgres.database.azure.com:5432/postgres
             - name: KUMULUZEE_DATASOURCES0_USERNAME
-              value: postgres@rsobaza
+              value: posgres
             - name: KUMULUZEE_DATASOURCES0_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: pg-pass
-                  key: KUMULUZEE_DATASOURCES0_PASSWORD
+              value: Rs0zap1ski
           ports:
             - containerPort: 8080
               name: server
               protocol: TCP
+
 
 ---
 
@@ -37,7 +35,7 @@ kind: Service
 metadata:
   name: comment
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - port: 8080
       protocol: TCP
